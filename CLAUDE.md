@@ -10,6 +10,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Never run ANY `git stash` command** — not `git stash`, `git stash list`, `git stash pop`, `git stash show`, or any other stash subcommand. This is a hard ban on the entire `git stash` family, including read-only variants. Multiple agents may work in parallel on the same repo; stash operations create invisible shared state that causes silent data loss across concurrent sessions. Use branches, temporary commits, or disk-anchored files instead. If you need to check for uncommitted changes, use `git status` or `git diff`.
 
+## Automated Guardrails (Hooks)
+
+`.claude/settings.json` enforces some conventions mechanically — treat these as given, not as extra steps to perform manually:
+
+- **Secrets can't be edited via tools**: `PreToolUse` blocks `Edit`/`Write` on `.env`, `.env.*`, `firebase-sa.json`, `credentials.json`, `serviceAccount*.json`. Edit `.env.example` instead and let the user create the real file.
+- **Lock files can't be hand-edited**: `package-lock.json`, `poetry.lock`, `Pipfile.lock` are blocked. Run `npm install` / `pip install` so the lockfile is generated correctly instead of writing to it directly.
+- **Frontend edits auto-lint**: Any `Edit`/`Write` touching `taskit/taskit-frontend/src/**/*.{ts,tsx,js,jsx}` triggers `eslint --fix` automatically (`PostToolUse`). Don't spend a separate turn manually fixing lint issues the hook already resolves.
+
 ## Design Principles
 
 **Default First**: Every feature should work out of the box with sensible defaults. Configuration, agent assignments, and settings should be *suggestive* — provide a good default that the user can override, rather than requiring upfront configuration. The system picks reasonable choices automatically; the user intervenes only when they want something different.
@@ -223,7 +231,7 @@ Wave 3 (haiku):          Verify live
 
 ## Hierarchical Documentation
 
-This is a monorepo. Each project has its own `CLAUDE.md` (or `claude.md`) and `AGENTS.md` with project-specific commands, architecture, and guidelines. Claude Code auto-discovers these when you run from a subdirectory — the root file provides only repo-wide context.
+This is a monorepo. Each project has its own `CLAUDE.md` with project-specific commands, architecture, and guidelines; some also ship `AGENTS.md` / `GEMINI.md` for other coding agents (e.g. `harness_usage_status/`). Nesting can go more than one level deep — `taskit/CLAUDE.md` covers the full-stack app and `taskit/taskit-backend/CLAUDE.md` covers backend-specific models, domain rules, and API endpoints. Claude Code auto-discovers these when you run from a subdirectory — the root file provides only repo-wide context.
 
 ## Data Inspection & Debugging
 
@@ -287,10 +295,28 @@ odin logs -b <board_id>                                # Access logs from any di
 
 ## Repository Structure
 
-- **`harness_usage_status/`** — Python CLI for checking AI provider usage quotas.
-- **`odin/`** — Multi-agent orchestration CLI (task-board model, suggestive agent assignments).
-- **`taskit/`** — Full-stack task dashboard (Django REST + React/TypeScript/Vite).
-- **`prompt-library/`** — Reusable prompt templates (separate git repository).
+This is the monorepo for **Harness Kit** — human + AI task orchestration. See root `README.md` for the product pitch/screenshots and `TROUBLESHOOTING.md` for common setup issues.
+
+| Path | What it is | Deeper docs |
+|---|---|---|
+| `odin/` | Multi-agent orchestration CLI — task-board model, suggestive agent assignments, harness registry for Claude/Gemini/Codex/Qwen/Kilo Code | `odin/CLAUDE.md`, `odin/README.md` |
+| `taskit/` | Full-stack task dashboard — Django REST backend + React/TypeScript/Vite frontend (kanban, DAG view, timeline, analytics) | `taskit/CLAUDE.md` → `taskit/taskit-backend/CLAUDE.md` |
+| `harness_usage_status/` | Python CLI for checking AI provider usage quotas (Claude, Codex, Gemini, Qwen, MiniMax, GLM); Odin imports it optionally for quota-aware agent routing | `harness_usage_status/CLAUDE.md` |
+| `docs/` | Cross-cutting documentation — breadcrumb traces, compounded solutions, philosophy, testing process, deployment/MCP guides | `docs/_INDEX.md` |
+| `.claude/` | Claude Code config for this repo — skills (`skills/dk-*`), custom subagent personas (`agents/`), automated hooks (`settings.json`, see "Automated Guardrails" above) | — |
+| `tests/` | Repo-level e2e snapshot tests (`tests/e2e_snapshots/`) bridging unit tests and live spec runs | "Snapshot tests" below |
+| `control/` | Celery filesystem-broker control directory — runtime artifact, not source you need to edit | — |
+| `screenshots/` | Product screenshots embedded in `README.md` | — |
+| `dev.sh` | One-command dev bootstrap (see below) | — |
+
+### Running the stack
+
+```bash
+./dev.sh                     # backend (:8000) + frontend (:5173) + celery worker, from repo root
+cd odin && pip install -e .  # odin CLI — needed to execute agents/specs
+```
+
+First run provisions a venv, installs backend/frontend deps, migrates SQLite, and seeds agent users (~60s). Subsequent runs start in ~3s. `Ctrl-C` stops all three services. Logs land in `.dev-logs/` (`backend.log`, `frontend.log`, `celery.log`). `dev.sh` warns (but doesn't block) if `taskit-backend/.env` or `taskit-frontend/.env` exist, since their settings override the zero-config defaults — remove them for the zero-config path, or keep them for custom config (e.g. Postgres instead of SQLite, see `taskit/CLAUDE.md`).
 
 ## Testing & Proof
 

@@ -1,0 +1,23 @@
+[project]
+name = "taskit-backend"
+version = "0.1.0"
+description = "TaskIt Django REST backend"
+requires-python = ">=3.10"
+dependencies = [
+    "django==5.1.4",
+    "djangorestframework==3.15.2",
+    "psycopg2-binary==2.9.10",
+    "django-cors-headers==4.6.0",
+    "python-dotenv==1.0.1",
+    "djangorestframework-simplejwt==5.4.0",
+    "celery[redis]==5.4.0",
+    "redis==5.2.1",
+    "pyyaml==6.0.2",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = []

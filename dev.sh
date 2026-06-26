@@ -3,8 +3,10 @@ set -euo pipefail
 
 # dev.sh — clone → ./dev.sh → working app
 #
-# First run (~60s): venv, deps, migrate, seed agents
+# First run (~60s): uv tool install (odin/taskit-mcp), uv sync, migrate, seed agents
 # After that (~3s): just starts services
+#
+# Requires: uv (https://docs.astral.sh/uv/)
 #
 # Ctrl-C stops everything.
 
@@ -51,22 +53,18 @@ fi
 
 # --- Provision (idempotent, each step skips if already done) ---
 
-if [ ! -d "$ROOT_DIR/.venv" ]; then
-    log "Creating virtual environment..."
-    python3 -m venv "$ROOT_DIR/.venv"
+if ! command -v uv &>/dev/null; then
+    echo "uv is required but not found on PATH. Install it: https://docs.astral.sh/uv/" >&2
+    exit 1
 fi
-# shellcheck disable=SC1091
-source "$ROOT_DIR/.venv/bin/activate"
 
 if ! command -v odin &>/dev/null; then
-    log "Installing odin..."
-    pip install -e "$ODIN_DIR" --quiet
+    log "Installing odin + taskit-mcp (uv tool)..."
+    uv tool install "$ODIN_DIR[mcp,dev]" --quiet
 fi
 
-if ! python -c "import rest_framework" 2>/dev/null; then
-    log "Installing backend deps..."
-    pip install -r "$BACKEND_DIR/requirements.txt" --quiet
-fi
+log "Syncing backend deps (uv)..."
+(cd "$BACKEND_DIR" && uv sync --quiet)
 
 if [ ! -d "$FRONTEND_DIR/node_modules" ]; then
     log "Installing frontend deps..."
@@ -75,10 +73,10 @@ fi
 
 # Migrations — always run (fast no-op when nothing changed)
 log "Checking migrations..."
-python "$BACKEND_DIR/manage.py" migrate --run-syncdb --verbosity 0
+(cd "$BACKEND_DIR" && uv run manage.py migrate --run-syncdb --verbosity 0)
 
 # Seed agent users (idempotent — merges, never duplicates)
-python "$BACKEND_DIR/manage.py" seedmodels --verbosity 0 > /dev/null 2>&1 || true
+(cd "$BACKEND_DIR" && uv run manage.py seedmodels --verbosity 0) > /dev/null 2>&1 || true
 
 # Broker dirs
 mkdir -p "$BACKEND_DIR/.celery/out" "$BACKEND_DIR/.celery/processed" "$BACKEND_DIR/.celery/results"
@@ -86,13 +84,13 @@ mkdir -p "$LOG_DIR"
 
 # --- Start ---
 
-python "$BACKEND_DIR/manage.py" runserver 0.0.0.0:8000 > "$LOG_DIR/backend.log" 2>&1 &
+(cd "$BACKEND_DIR" && uv run manage.py runserver 0.0.0.0:8000) > "$LOG_DIR/backend.log" 2>&1 &
 PIDS+=($!)
 
 (cd "$FRONTEND_DIR" && npm run dev) > "$LOG_DIR/frontend.log" 2>&1 &
 PIDS+=($!)
 
-(cd "$BACKEND_DIR" && celery -A config worker --beat --loglevel=info --concurrency=3 --pool=prefork) > "$LOG_DIR/celery.log" 2>&1 &
+(cd "$BACKEND_DIR" && uv run celery -A config worker --beat --loglevel=info --concurrency=3 --pool=prefork) > "$LOG_DIR/celery.log" 2>&1 &
 PIDS+=($!)
 
 BOLD='\033[1m'

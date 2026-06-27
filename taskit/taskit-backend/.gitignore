@@ -18,3 +18,7 @@ Thumbs.db
 tmp/
 firebase-sa.json
 .celery/
+
+# Agent Message Queue
+.agent-mail/
+.amqrc

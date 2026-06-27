@@ -367,4 +367,3 @@ When to re-capture: after model/serializer changes, harness changes, or when sna
 2. **The design principle** — the *why* behind the approach, reusable across contexts (e.g., "information hierarchy via progressive disclosure" applies to any sidebar, not just TaskDetailModal)
 
 Solutions in `design-patterns/` are principle-heavy. Solutions in `ui-bugs/`, `runtime-errors/`, etc. are fix-heavy. Both should include the other dimension — a bug fix should note the principle it violates; a design pattern should include concrete code.
-

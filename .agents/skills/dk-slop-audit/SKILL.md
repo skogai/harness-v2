@@ -113,4 +113,3 @@ After creating all files, print:
 - Total findings per priority
 - Top 5 most impactful fixes (best effort-to-impact ratio)
 - Any categories with zero findings (confirms they were checked)
-

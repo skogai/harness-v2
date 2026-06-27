@@ -177,4 +177,3 @@ Tell the user what was done:
 - **dry-run**: "Here's your changelog entry. Run `/dk-changelog` to write and PR it."
 - **commit**: "Changelog updated and committed on branch `changelog/YYYY-MM-DD`."
 - **default**: "Changelog updated, committed, and PR opened: [URL]"
-

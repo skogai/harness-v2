@@ -179,4 +179,3 @@ Show the user:
 3. Your proposed resolution (or the options you see)
 
 Then wait for confirmation before editing. A wrong merge is worse than a slow merge.
-

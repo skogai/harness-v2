@@ -201,4 +201,3 @@ Signals of a bad doc:
 - No code examples for a code-related learning
 - Filler phrases ("It's worth noting that...", "This approach ensures...")
 - Prevention section says "be careful" instead of giving concrete checks
-

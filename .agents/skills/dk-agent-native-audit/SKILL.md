@@ -102,4 +102,3 @@ After all agents complete, compile the summary using this template:
 - Summary table shows all scores and status indicators
 - Top 10 recommendations are prioritized by impact
 - Report identifies both strengths and gaps
-

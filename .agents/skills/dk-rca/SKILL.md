@@ -149,4 +149,3 @@ If after Step 3, your hypothesis doesn't hold (the fix doesn't work, or a new er
 1. Do NOT cascade-fix (fixing error A reveals error B, fixing B reveals C — this means A was wrong)
 2. Go back to Step 2 and re-locate
 3. If stuck after 2 failed hypotheses, zoom out: re-read the data flow end-to-end, question your assumptions about what the code does vs. what you think it does
-

@@ -120,4 +120,3 @@ After execution completes, check results with:
 ```
 
 This connects the two skills into a natural workflow.
-

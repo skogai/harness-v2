@@ -175,4 +175,3 @@ Don't paste the entire report — the user can read the file.
 **What if the target is already well-covered?** — That's a valid finding. Write a short report confirming GREEN across stages, note any minor improvements, and move on. Don't inflate minor issues.
 
 **What if the audit reveals a gap you can fix right now?** — Don't fix it. The audit's job is to produce the report. Fixing gaps is a separate task that the user should prioritize. Mention "this could be fixed now" in the effort field if it's truly trivial.
-

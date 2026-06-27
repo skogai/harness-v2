@@ -337,4 +337,3 @@ Same discipline as dk-close-the-loop — the workspace is the memory, not the co
 - **Changes where the interface is already clear and validated** — skip straight to TDD
 
 The skill is for features where the *experience* needs validation before the *implementation* begins. If you already know exactly what the user should see, you don't need to mock it first.
-

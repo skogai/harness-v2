@@ -246,4 +246,3 @@ These are non-negotiable — they're the entire point of using a scratch directo
 4. **loop.md is the resumption point.** If the conversation compacts or a new session starts, loop.md + the iteration folders contain everything needed to continue.
 
 5. **The user sees summaries, not data.** After each phase, report to the user in 2-3 lines: what happened, what the verdict was, what's next. They can dig into the scratch directory if they want details.
-

@@ -85,4 +85,3 @@ Examples:
   /dk-local-inspect spec 15 --json --sections tasks,problems
   /dk-local-inspect board
 ```
-

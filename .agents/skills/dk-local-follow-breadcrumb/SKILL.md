@@ -96,4 +96,3 @@ This closes the loop — exploration that finds undocumented territory feeds bac
 - **Single-file questions** — "What does `function_name` in `file.py` do?" → Just read the file directly.
 - **Creating new breadcrumbs** — Use `/dk-breadcrumb-creator` instead. This skill reads; that one writes.
 - **General codebase search** — "Find all TODO comments" → Just grep. Breadcrumbs trace flows, not search for patterns.
-

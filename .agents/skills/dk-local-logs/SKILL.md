@@ -216,4 +216,3 @@ If a log file doesn't exist, say so and suggest:
 
 If `.dev-logs/` doesn't exist at all:
 - "The `.dev-logs/` directory doesn't exist. Run `./dev.sh` to start the dev stack, which creates logs there."
-

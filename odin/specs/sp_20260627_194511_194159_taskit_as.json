@@ -1,0 +1,11 @@
+{
+  "id": "sp_20260627_194511_194159_taskit_as",
+  "title": "specs/sp_20260627_194159_taskit_as.json",
+  "source": "specs/sp_20260627_194159_taskit_as.json",
+  "content": "{\n  \"id\": \"sp_20260627_194159_taskit_as\",\n  \"title\": \"fix taskit as a backend and look over the last parts of the harness-doc-review-s\",\n  \"source\": \"inline\",\n  \"content\": \"fix taskit as a backend and look over the last parts of the harness-doc-review-spec so they all get green lit\",\n  \"created_at\": \"2026-06-27T19:41:59.910469\",\n  \"abandoned\": false,\n  \"metadata\": {\n    \"working_dir\": \"/home/skogix/harness/odin\"\n  }\n}",
+  "created_at": "2026-06-27T19:45:11.881032",
+  "abandoned": false,
+  "metadata": {
+    "working_dir": "/home/skogix/harness/odin"
+  }
+}

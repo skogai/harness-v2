@@ -8,7 +8,12 @@ import yaml
 from dotenv import load_dotenv
 
 from odin.models import (
-    AgentConfig, ChromeDevToolsConfig, CostTier, ModelRoute, OdinConfig, TaskItConfig,
+    AgentConfig,
+    ChromeDevToolsConfig,
+    CostTier,
+    ModelRoute,
+    OdinConfig,
+    TaskItConfig,
 )
 
 # Config search order:
@@ -33,9 +38,9 @@ DEFAULT_MODEL_ROUTING = [
     ("minimax", "minimax-coding-plan/MiniMax-M2.5"),
     ("glm", "zai-coding-plan/glm-5"),
     ("gemini", "gemini-3-pro-preview"),
-    ("claude", "claude-sonnet-4-5"),
-    ("codex", "gpt-5.3-codex"),
-    ("claude", "claude-opus-4-6"),
+    ("claude", "claude-sonnet-4-6"),
+    ("codex", "gpt-5.5-codex"),
+    ("claude", "claude-opus-4-7"),
 ]
 
 
@@ -127,10 +132,12 @@ def _apply_taskit_auth_env(cfg: TaskItConfig) -> TaskItConfig:
     email = os.environ.get("ODIN_ADMIN_USER") or cfg.admin_email
     password = os.environ.get("ODIN_ADMIN_PASSWORD") or cfg.admin_password
     if email or password:
-        cfg = cfg.model_copy(update={
-            "admin_email": email,
-            "admin_password": password,
-        })
+        cfg = cfg.model_copy(
+            update={
+                "admin_email": email,
+                "admin_password": password,
+            }
+        )
     return cfg
 
 
@@ -156,9 +163,16 @@ def _load_from_yaml(path: Path, source: str) -> OdinConfig:
 
         cost_tier = cfg.get("cost_tier", "medium")
         known_keys = {
-            "enabled", "cli_command", "api_key", "base_url",
-            "capabilities", "cost_tier", "execute_args", "models",
-            "default_model", "premium_model",
+            "enabled",
+            "cli_command",
+            "api_key",
+            "base_url",
+            "capabilities",
+            "cost_tier",
+            "execute_args",
+            "models",
+            "default_model",
+            "premium_model",
         }
         extras = {k: v for k, v in cfg.items() if k not in known_keys}
 
@@ -192,7 +206,10 @@ def _load_from_yaml(path: Path, source: str) -> OdinConfig:
             yaml_cfg.premium_model = default_cfg.premium_model
         if not yaml_cfg.capabilities:
             yaml_cfg.capabilities = default_cfg.capabilities
-        if yaml_cfg.cost_tier == CostTier.MEDIUM and default_cfg.cost_tier != CostTier.MEDIUM:
+        if (
+            yaml_cfg.cost_tier == CostTier.MEDIUM
+            and default_cfg.cost_tier != CostTier.MEDIUM
+        ):
             yaml_cfg.cost_tier = default_cfg.cost_tier
 
     # Yolo mode: auto-enable API agents when keys are present
@@ -201,7 +218,9 @@ def _load_from_yaml(path: Path, source: str) -> OdinConfig:
 
     # Parse model routing (fall back to defaults if not specified)
     raw_routing = raw.get("model_routing")
-    model_routing = _parse_model_routing(raw_routing) if raw_routing else _default_model_routing()
+    model_routing = (
+        _parse_model_routing(raw_routing) if raw_routing else _default_model_routing()
+    )
 
     # Parse taskit config section
     taskit_cfg = None

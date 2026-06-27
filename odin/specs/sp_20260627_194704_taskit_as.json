@@ -1,0 +1,11 @@
+{
+  "id": "sp_20260627_194704_taskit_as",
+  "title": "fix taskit as a backend and look over the last parts of the harness-doc-review-s",
+  "source": "inline",
+  "content": "fix taskit as a backend and look over the last parts of the harness-doc-review-spec so they all get green lit",
+  "created_at": "2026-06-27T19:47:04.891623",
+  "abandoned": false,
+  "metadata": {
+    "working_dir": "/home/skogix/harness/odin"
+  }
+}

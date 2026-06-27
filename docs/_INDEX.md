@@ -11,6 +11,7 @@ Master index for all documentation in the harness-kit monorepo.
 | **Philosophy** | `philosophy/` | Core design principles that govern how we build | Manual |
 | **Testing process** | `testing_process/` | Testing framework, RCA protocol, test categories | Manual |
 | **Guides** | `guides/` | Operational how-tos — deployment, building MCPs | Manual |
+| **Harness adoption** | `harness-adoption/` | Portable repo contract for using the harness across projects | Manual |
 | **Brainstorms** | `brainstorms/` | Timestamped design explorations for future work | Manual |
 | **Prompts** | `prompts/` | Reusable prompt templates for audits, reviews, etc. | Manual |
 
@@ -38,6 +39,9 @@ Master index for all documentation in the harness-kit monorepo.
 ### guides/
 - `deployment.md` — deploying taskit-backend, taskit-frontend, odin across environments
 - `mcp_building.md` — creating MCP servers in Python (FastMCP) or Node/TypeScript
+
+### harness-adoption/
+- `README.md` — working base for the dash-skogai decision, schema, spec, and migration guide that define what other repos need to provide to use the harness
 
 ### brainstorms/
 - `2026-02-19-sandboxed-execution-brainstorm.md` — persistent sandbox pool with process isolation

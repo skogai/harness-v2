@@ -2,7 +2,8 @@
   "session_id": "692582e6-644f-43a2-8248-e2c7001259b3",
   "prompts": [
     "/dk-local-logs",
-    "/dk-local-inspect"
+    "/dk-local-inspect",
+    "/dk-compound \"all the specs and plans which have been created since i wrote you you last. look at the state of this repo right now\""
   ],
   "agent_name": "Catalyst"
 }

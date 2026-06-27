@@ -1,0 +1,3 @@
+[submodule ".skogai"]
+	path = .skogai
+	url = git@github.com:skogai/dot-skogai.git

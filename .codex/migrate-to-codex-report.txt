@@ -1,0 +1,63 @@
+Migration inventory:
+  active: instruction files - 2 found
+    - CLAUDE.md
+    - AGENTS.md
+  active: skills - 14 found
+    - dk-agent-native-audit
+    - dk-breadcrumb-creator
+    - dk-changelog
+    - dk-close-the-loop
+    - dk-compound
+    - dk-local-follow-breadcrumb
+    - dk-local-inspect
+    - dk-local-logs
+    - dk-local-mock-first-approach
+    - dk-local-run-spec
+    - dk-loop-audit
+    - dk-merge-resolve
+    - dk-rca
+    - dk-slop-audit
+  inactive: command sources - none found
+  active: subagents - 2 found
+    - dk-test-writer
+    - senior-fullstack-engineer
+Migration surfaces:
+  active: AGENTS.md - 1 instruction file(s) found.
+  active: skills - 14 skill(s) converted.
+  active: MCP config - 3 MCP server(s) converted into config.toml.
+  active: subagents - 2 subagent(s) converted.
+Migration report:
+  manual_fix_required: AGENTS.md - Generated copy contains Claude-only instruction semantics.
+  rewritten: .codex/hooks.json - Rewritten for Codex hooks; review behavior before relying on it. Codex hooks require `[features].codex_hooks = true`, only execute `command` handlers, skip `async` / `prompt` / `agent` handlers, ignore `matcher` for `UserPromptSubmit` and `Stop`, and `PreToolUse` / `PostToolUse` currently run for shell commands only.
+  manual_fix_required: .agents/skills/dk-agent-native-audit/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`, `disable-model-invocation`.
+  manual_fix_required: .agents/skills/dk-breadcrumb-creator/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-changelog/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-close-the-loop/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-compound/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-local-follow-breadcrumb/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-local-inspect/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-local-logs/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-local-mock-first-approach/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-local-run-spec/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-loop-audit/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-merge-resolve/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`.
+  manual_fix_required: .agents/skills/dk-rca/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  manual_fix_required: .agents/skills/dk-slop-audit/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`.
+  rewritten: .codex/config.toml - Converted 3 MCP server entries.
+  manual_fix_required: .codex/agents/dk-test-writer.toml - Manual review required for Claude subagent fields: `name`, `description`.
+  manual_fix_required: .codex/agents/senior-fullstack-engineer.toml - Manual review required for Claude subagent fields: `color`.
+  overwritten: .agents/skills/dk-breadcrumb-creator - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-local-follow-breadcrumb - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-rca - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-merge-resolve - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-slop-audit - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-loop-audit - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-local-inspect - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-close-the-loop - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-local-logs - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-changelog - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-local-run-spec - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-agent-native-audit - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-local-mock-first-approach - Existing Codex skill will be replaced.
+  overwritten: .agents/skills/dk-compound - Existing Codex skill will be replaced.
+  overwritten: .codex/agents/senior-fullstack-engineer.toml - Existing Codex subagent will be replaced.

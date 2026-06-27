@@ -1,0 +1,200 @@
+[
+  {
+    "id": "task_1",
+    "title": "Establish the review inventory and shared state",
+    "description": "Read `docs/_INDEX.md`, `docs/breadcrumb_analysis/_INDEX.md`, and `docs/breadcrumb_analysis/spec-task-lifecycle/_INDEX.md`, then independently enumerate every Markdown file under all five scoped roots. Establish the filesystem-backed reading order and initialize a coverage checklist, glossary, architecture map, decision ledger, and open-question list. Mark index documents as reviewed only after checking their claims against the actual tree. This task defines the state format all later tasks must carry forward; repository documentation remains read-only. Proof: show the sorted 59-file inventory, per-root counts, zero difference between that inventory and the coverage checklist, and the initialized review state to the user.",
+    "required_capabilities": ["reasoning", "planning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "medium",
+    "depends_on": [],
+    "expected_outputs": ["Verified 59-file coverage checklist", "Ordered topic map", "Initialized glossary, architecture map, decision ledger, and open-question list", "User-visible inventory proof"]
+  },
+  {
+    "id": "task_2",
+    "title": "Review project understanding and core philosophy",
+    "description": "Conversationally review `odin/docs/project_understanding.md`, `odin/docs/philosophy.md`, and `harness_usage_status/docs/project_understanding.md` as distinct but related topics. For each topic, explain its claimed problem and design, trace the named packages, entry points, configuration, and current behavior, argue both for and against it, identify stale or conflicting claims, propose a provisional verdict, and pause for the user's judgment before continuing. Update shared state after each checkpoint. Proof: demonstrate representative live code/config paths supporting or contradicting each document and record a user-confirmed verdict for every topic.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_1"],
+    "expected_outputs": ["Three checkpointed conversational reviews", "Code-grounded project architecture map", "Updated glossary, decisions, questions, and coverage"]
+  },
+  {
+    "id": "task_3",
+    "title": "Review specifications, hierarchy, and sample lifecycle",
+    "description": "Review `odin/docs/specs_and_hierarchy.md` and `odin/docs/sample_flow.md`, treating the specification hierarchy and the end-to-end sample as separate checkpoints. Trace the actual spec parsing, task creation, hierarchy representation, and CLI flow to distinguish executable behavior from illustration or aspiration. Evaluate simpler representations and the coupling imposed by the documented hierarchy. Proof: run or cite focused repository commands/tests that expose the current lifecycle, show where the sample matches or diverges, and record a user verdict after each topic.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_2"],
+    "expected_outputs": ["Checkpointed specs-and-hierarchy review", "Checkpointed sample-flow review", "Updated lifecycle map and ledgers"]
+  },
+  {
+    "id": "task_4",
+    "title": "Review execution, communication, and activity records",
+    "description": "Review `odin/docs/execution.md`, `odin/docs/communication.md`, and `odin/docs/activity-and-comments.md` one topic at a time. Trace dispatch/execution state transitions, agent communication channels, activity persistence, comments, failure paths, and ownership across Odin and TaskIt. Pay particular attention to duplicated event concepts and operational complexity. Pause for judgment and update shared state after every topic. Proof: demonstrate current behavior through targeted tests, CLI/API calls, or precise code/config traces, with a recorded verdict for all three documents.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_3"],
+    "expected_outputs": ["Three checkpointed reviews", "Execution and communication architecture updates", "Recorded contradictions and verdicts"]
+  },
+  {
+    "id": "task_5",
+    "title": "Review proof of work and MCP integration",
+    "description": "Review `odin/docs/proof-of-work.md`, `odin/docs/mcp.md`, and `odin/docs/testing_mcp.md` as sequential checkpoints. Trace proof submission and validation through the live models/services, then verify the real stdio MCP server, configuration discovery, and documented tools rather than inferring network behavior. Assess trust boundaries, proof quality, failure handling, and whether MCP adds justified coupling. Proof: show a focused proof-validation example and a real MCP smoke interaction or existing executable smoke command, then record the user's verdict after each topic.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_4"],
+    "expected_outputs": ["Checkpointed proof-of-work review", "Checkpointed MCP design review", "Checkpointed MCP-testing review", "Verified MCP/proof evidence and updated ledgers"]
+  },
+  {
+    "id": "task_6",
+    "title": "Review TaskIt integration and Git isolation",
+    "description": "Review `odin/docs/taskit-understanding.md` and `odin/docs/git-and-worktree.md` separately. Trace the actual Odin-to-TaskIt API boundary, task ownership, persistence, worktree creation/cleanup, branch assumptions, and failure recovery. Surface whether TaskIt and Git responsibilities are cleanly separated and identify cheaper alternatives. Proof: demonstrate the relevant API/client and worktree paths with focused commands or tests, and capture a user-confirmed verdict after each topic.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_5"],
+    "expected_outputs": ["Checkpointed TaskIt integration review", "Checkpointed Git/worktree review", "Updated ownership and dependency maps"]
+  },
+  {
+    "id": "task_7",
+    "title": "Review harness adapters and adoption contract",
+    "description": "Review `odin/docs/harness.md` and `docs/harness-adoption/README.md` as two checkpoints. Verify supported agent adapters, CLI/config assumptions, model routing, MCP injection, and the generic adoption contract against current code and repository configuration. Separate canonical cross-repo requirements from provider-specific guidance and flag drift-prone install instructions. Proof: show current adapter/config discovery evidence and a concrete contract-conformance check, then record a verdict for each topic.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_6"],
+    "expected_outputs": ["Checkpointed harness-adapter review", "Checkpointed adoption-contract review", "Updated portability and ownership findings"]
+  },
+  {
+    "id": "task_8",
+    "title": "Review testing philosophy and end-to-end process",
+    "description": "Review `docs/philosophy/testing.md`, `docs/testing_process/testcase_process_and_philosophy.md`, and `docs/testing_process/testing_end_to_end.md` one at a time. Compare the claimed testing taxonomy, case-design process, environments, and end-to-end workflow with actual test directories, runner configuration, fixtures, and CI/developer commands. Identify overlap and decide whether these documents should remain separate. Proof: show test collection or focused runner evidence for each subsystem, map documented layers to real suites, and obtain a user verdict at every checkpoint.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_7"],
+    "expected_outputs": ["Three checkpointed testing reviews", "Document-to-suite traceability map", "Merge/revision findings and updated ledgers"]
+  },
+  {
+    "id": "task_9",
+    "title": "Review deployment and MCP-building guides",
+    "description": "Review `docs/guides/deployment.md` and `docs/guides/mcp_building.md` as separate operational topics. Trace every material deployment component, environment variable, service command, MCP build step, and configuration path against live scripts/manifests. Evaluate maintenance burden, security assumptions, and whether the guides describe supported or hypothetical operations. Avoid deploying or changing external state. Proof: demonstrate local dry-run/config validation or precise executable traces and record a user-confirmed verdict for each guide.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_8"],
+    "expected_outputs": ["Checkpointed deployment review", "Checkpointed MCP-building review", "Operational dependency and risk updates"]
+  },
+  {
+    "id": "task_10",
+    "title": "Review spec planning and Odin plan mode breadcrumbs",
+    "description": "Review each breadcrumb bundle as one checkpoint, reading FLOW, DETAILS, and DEBUG together: `docs/breadcrumb_analysis/spec-to-task-planning/{FLOW,DETAILS,DEBUG}.md` and `docs/breadcrumb_analysis/odin-plan-mode/{FLOW,DETAILS,DEBUG}.md`. Trace both flows through current planners, routers, schemas, and tests; distinguish duplicated descriptions from genuinely different planning paths. Proof: demonstrate each current flow with a focused command/test or code trace, enumerate cross-bundle contradictions, and record a user verdict after each bundle.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_9"],
+    "expected_outputs": ["Checkpointed spec-to-task planning review", "Checkpointed Odin plan-mode review", "Planning-flow comparison and updated coverage"]
+  },
+  {
+    "id": "task_11",
+    "title": "Review post-planning execution and reflection breadcrumbs",
+    "description": "Review the two indexed lifecycle subflows separately: `docs/breadcrumb_analysis/spec-task-lifecycle/02-execute-and-dispatch/{FLOW,DETAILS,DEBUG}.md` and `docs/breadcrumb_analysis/spec-task-lifecycle/03-reflection-loop/{FLOW,DETAILS,DEBUG}.md`. Validate state transitions, dependency satisfaction, dispatch strategies, reflection persistence, retry limits, and environment-variable claims against code and tests. Proof: show runnable or test-backed evidence for both flows, reconcile findings with the parent index reviewed in task_1, and record a verdict at each checkpoint.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_10"],
+    "expected_outputs": ["Checkpointed execution/dispatch breadcrumb review", "Checkpointed reflection-loop review", "Verified state-machine updates"]
+  },
+  {
+    "id": "task_12",
+    "title": "Review proof and TDD-enforcement breadcrumbs",
+    "description": "Review `docs/breadcrumb_analysis/task-proof-submission/{FLOW,DETAILS,DEBUG}.md` and `docs/breadcrumb_analysis/task-preset-tdd-enforcement/{FLOW,DETAILS,DEBUG}.md` as separate checkpoints. Trace actual validation and enforcement paths, including bypasses, failure semantics, preset ownership, and overlap with the earlier proof/testing documents. Evaluate whether policy is mechanically enforced or merely prompted. Proof: demonstrate focused positive and negative cases from tests or safe local commands and record the user's verdict for each bundle.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_11"],
+    "expected_outputs": ["Checkpointed proof-submission breadcrumb review", "Checkpointed TDD-enforcement review", "Enforcement-gap findings and updated ledgers"]
+  },
+  {
+    "id": "task_13",
+    "title": "Review routing and prompt-preset breadcrumbs",
+    "description": "Review `docs/breadcrumb_analysis/intelligent-agent-routing/{FLOW,DETAILS,DEBUG}.md` and `docs/breadcrumb_analysis/prompt-presets/{FLOW,DETAILS,DEBUG}.md` separately. Trace model/agent selection, cost and capability rules, preset resolution, prompt composition, configuration precedence, and failure fallbacks. Challenge whether the routing intelligence is observable and whether presets create hidden coupling. Proof: show representative router/preset decisions through tests, safe CLI output, or deterministic code traces, and record a verdict after each bundle.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_12"],
+    "expected_outputs": ["Checkpointed intelligent-routing review", "Checkpointed prompt-preset review", "Verified configuration and coupling map"]
+  },
+  {
+    "id": "task_14",
+    "title": "Review board lifecycle and trace-pipeline breadcrumbs",
+    "description": "Review `docs/breadcrumb_analysis/board-project-lifecycle/{FLOW,DETAILS,DEBUG,PROPOSED}.md` and `docs/breadcrumb_analysis/trace-data-pipeline/{FLOW,DETAILS,DEBUG}.md` as separate checkpoints. Explicitly classify the board proposal versus implemented behavior, then trace trace-data production, transport, storage, consumers, retention, and observability. Identify duplicated lifecycle state and operational costs across Odin and TaskIt. Proof: demonstrate current board and trace paths via APIs/tests/code traces, label every proposed-only claim, and record user verdicts for both bundles.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-opus-4-6",
+    "complexity": "high",
+    "depends_on": ["task_13"],
+    "expected_outputs": ["Checkpointed board-lifecycle review", "Checkpointed trace-pipeline review", "Proposal/implementation classification", "Updated operational-cost findings"]
+  },
+  {
+    "id": "task_15",
+    "title": "Review harness-isolation breadcrumb",
+    "description": "Review `docs/breadcrumb_analysis/harness-isolation-testing/{FLOW,DETAILS,DEBUG}.md` as a dedicated checkpoint. Trace isolation boundaries, temporary directories/worktrees, process cleanup, credential/environment leakage, and test coverage. Compare the design with simpler process-level or fixture-level isolation. Use disposable locations for any destructive validation and leave the source checkout unchanged. Proof: demonstrate a safe isolation test or existing focused suite, show cleanup evidence, and record the user's verdict.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_14"],
+    "expected_outputs": ["Checkpointed harness-isolation review", "Verified isolation and cleanup evidence", "Updated risk and alternatives ledger"]
+  },
+  {
+    "id": "task_16",
+    "title": "Review TaskIt backend API documentation",
+    "description": "Review `taskit/taskit-backend/docs/API.md` as a checkpoint grounded in the live Django routes, serializers, models, permissions, worker behavior, and tests. Check documented request/response shapes and error semantics, identify undocumented or stale endpoints, and reconcile API ownership with Odin and frontend assumptions. Proof: show route/schema inspection plus representative safe API or test-client responses, list documentation drift, and record the user's verdict.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "high",
+    "depends_on": ["task_15"],
+    "expected_outputs": ["Checkpointed backend API review", "Documented-versus-live endpoint matrix", "Updated ownership and contradiction ledger"]
+  },
+  {
+    "id": "task_17",
+    "title": "Review frontend modal solution documentation",
+    "description": "Review `taskit/taskit-frontend/docs/solutions/ui-bugs/modal-delete-button-safe-distance.md` as a checkpoint. Trace the described UI problem and solution into current components, styling, tests, and visible behavior; decide whether it is still implemented, reusable guidance, or obsolete incident history. Proof: show a focused frontend test and, when practical, a screenshot or rendered inspection of the current modal spacing, then record the user's verdict.",
+    "required_capabilities": ["reasoning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-sonnet-4-5",
+    "complexity": "medium",
+    "depends_on": ["task_16"],
+    "expected_outputs": ["Checkpointed frontend solution review", "Visible or test-backed UI evidence", "Updated coverage and documentation-lifecycle finding"]
+  },
+  {
+    "id": "task_18",
+    "title": "Produce the cross-cutting synthesis",
+    "description": "After every topic verdict is recorded, synthesize the complete Harness Kit architecture without editing repository documentation. Reconcile the glossary, architecture map, decision ledger, questions, and all contradictions; identify the strongest and weakest ideas, duplicated or unclear ownership, stale/proposed material, missing documentation, and a prioritized follow-up list. Do not override earlier user judgments; distinguish consensus, unresolved questions, and agent recommendations. Proof: show all 59 scoped Markdown files covered exactly once, every topic associated with a recorded checkpoint verdict, all open questions accounted for, and every synthesis claim linked to live repository evidence or an earlier review finding.",
+    "required_capabilities": ["reasoning", "planning", "writing"],
+    "suggested_agent": "claude",
+    "suggested_model": "claude-opus-4-6",
+    "complexity": "high",
+    "depends_on": ["task_17"],
+    "expected_outputs": ["Final architecture explanation", "Strengths, weaknesses, contradictions, and missing-docs synthesis", "Prioritized follow-up list", "Completed 59-file checklist and verdict ledger"]
+  }
+]

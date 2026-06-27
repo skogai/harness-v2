@@ -1,3 +1,7 @@
+personality = "friendly"
+
+[mcp_servers]
+
 [mcp_servers.taskit]
 command = "taskit-mcp"
 
@@ -12,3 +16,5 @@ args = ["-y", "@mobilenext/mobile-mcp@latest"]
 command = "npx"
 args = ["-y", "chrome-devtools-mcp@latest"]
 
+[features]
+hooks = true
